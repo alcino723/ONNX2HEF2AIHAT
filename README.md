@@ -5,7 +5,7 @@ This step by step is a recreation of what worked for me, hopefully this quick an
 
 ## Part 1 : Converting Onnx to HEF
 
-This guide is using `WSL2 Ubuntu 24.04` with `conda`
+The conversion part of this guide is using `WSL2 Ubuntu 24.04` with `conda`
 
 It is recommended to `simplified` your onnx first before conversion, but it is not a strict requirement.
 
@@ -226,7 +226,7 @@ Network Segformer/Segformer: 100% | 64 | FPS: 12.78 | ETA: 00:00:00
 
 then you are good to proceed.
 
-### 2.2 ) Basic exmaple code 
+### 2.2 ) Basic exmaple code : example.py (This code runs on the raspberry pi)
 
 Modify this line to fit your HEF
 
