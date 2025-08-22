@@ -11,54 +11,7 @@ It is recommended to simplified your onnx first before conversion, but it is not
 
 My guide is focus on model train with input data normalize to range[0 - 1]. If you model is train with other normalization range, then you will have to do some experimenting on your own. 
 
-### 1.0) Download hailo DFC
-
-If you don't have a hailoai account please head over to https://hailo.ai/ and create your account first.
-
-Once you have an account, login and go to developer zone.
-
-In developer zone go to Software Downloads.
-
- - Select Device : Hailo-8/8L
- - Software Sub-Package : Dataflow Compiler
- - Architecture : x86
- - OS : Linux
- - Python Version : 3.10
- - Filter by : Archive
-
-Download the following file to your wls2
-<img width="1992" height="174" alt="image" src="https://github.com/user-attachments/assets/335aff6c-2715-4548-8b3a-6528111ca9a4" />
-
-### 1.1) Setting up a new environment
-
-To get started, it is best to create a new virtual environment.
-
-```bash
-conda create -n YOUR_ENV_NAME python=3.10
-```
-
-Activate your environment.
-
-```bash
-conda activate YOUR_ENV_NAME 
-```
-
-Your should see 
-
-```bash 
-(YOUR_ENV_NAME) YOUR_USER_NAME@DESKTOP:~$
-```
-
-### 1.2) Install Hailo DFC
-
-Navigate to directory where `hailo_dataflow_compiler-3.31.0-py3-none-linux_x86_64.whl` is placed.
-
-Install Hailo DFC.
-```bash 
-pip install hailo_dataflow_compiler-3.31.0-py3-none-linux_x86_64.whl
-```
-
-### 1.3) Project Structure
+### 1.0) Git Clone repository
 
 git clone this repository. 
 
@@ -73,11 +26,88 @@ The starting folder structures look like this :
     - PLACE YOUR ONNX HERE
   - Hailo
     - model_script.alls
+  - Images
+    - PLACE YOUR CALIBRATION IMAGE HERE
   - onnx2har.py
   - optimize_har.py
   - compile_har.py
 
-Place your onnx under the Onnx folder. 
+Place your onnx under the Onnx folder.
+
+Place your calibration images (images you use to evaluate your model) under the Images folder. 
+
+### 1.0) Download hailo DFC
+
+If you don't have a hailoai account please head over to https://hailo.ai/ and create your account first.
+
+Once you have an account, login and go to developer zone.
+
+In developer zone go to Software Downloads.
+
+ - Select Device : Hailo-8/8L
+ - Software Sub-Package : Dataflow Compiler
+ - Architecture : x86
+ - OS : Linux
+ - Python Version : 3.10
+ - Filter by : Latest Release (Change to Archive if you couldn't find it)
+
+Download the following file to Project directory
+<img width="1994" height="210" alt="image" src="https://github.com/user-attachments/assets/4a17d40d-b67b-4bbe-802c-f3f997e2d331" />
+
+### 1.1) Setting up environments 
+
+To get started, it is best to create 2 new virtual environment. 1 for Hailo and 1 for cv2
+
+Environment Hailo 
+
+```bash
+conda create -n Hailo python=3.10
+```
+
+Activate your environment.
+
+```bash
+conda activate Hailo
+```
+
+Your should see 
+
+```bash 
+(Hailo) YOUR_USER_NAME@DESKTOP:~$
+```
+
+Install Hailo DFC in the `Hailo` environment.
+
+```bash 
+pip install hailo_dataflow_compiler-3.32.0-py3-none-linux_x86_64.whl
+```
+
+---------------
+
+Environment CV2
+
+```bash
+conda create -n CV2 python=3.10
+```
+
+Activate your environment.
+
+```bash
+conda activate CV2
+```
+
+Your should see 
+
+```bash 
+(CV2) YOUR_USER_NAME@DESKTOP:~$
+
+```
+
+Install `opencv-python` in the `CV2` environment
+
+```bash
+pip install opencv-python
+```
 
 ### 1.4) Convert Onnx to HAR
 
