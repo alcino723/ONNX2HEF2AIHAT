@@ -21,7 +21,7 @@ git clone https://github.com/alcino723/ONNX2HEF2AIHAT.git
 
 The starting folder structures look like this : 
 
-- PROJECT
+- ONNX2HEF2AIHAT
   - Onnx
     - PLACE YOUR ONNX HERE
   - Hailo
