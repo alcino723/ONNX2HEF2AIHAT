@@ -11,7 +11,7 @@ It is recommended to simplified your onnx first before conversion, but it is not
 
 My guide is focus on model train with input data normalize to range[0 - 1]. If you model is train with other normalization range, then you will have to do some experimenting on your own. 
 
-### 1.0) Git Clone repository
+### 1.0 ) Git Clone repository
 
 git clone this repository. 
 
@@ -36,7 +36,7 @@ Place your onnx under the Onnx folder.
 
 Place your calibration images (images you use to evaluate your model) under the Images folder. 
 
-### 1.0) Download hailo DFC
+### 1.1 ) Download hailo DFC
 
 If you don't have a hailoai account please head over to https://hailo.ai/ and create your account first.
 
@@ -49,12 +49,13 @@ In developer zone go to Software Downloads.
  - Architecture : x86
  - OS : Linux
  - Python Version : 3.10
- - Filter by : Latest Release (Change to Archive if you couldn't find it)
+ - Filter by : Archive
 
 Download the following file to Project directory
-<img width="1994" height="210" alt="image" src="https://github.com/user-attachments/assets/4a17d40d-b67b-4bbe-802c-f3f997e2d331" />
+<img width="1994" height="172" alt="image" src="https://github.com/user-attachments/assets/edd078d5-3461-44ce-95df-1990e7bf9503" />
 
-### 1.1) Setting up environments 
+
+### 1.2 ) Setting up environments 
 
 To get started, it is best to create 2 new virtual environment. 1 for Hailo and 1 for cv2
 
@@ -79,7 +80,7 @@ Your should see
 Install Hailo DFC in the `Hailo` environment.
 
 ```bash 
-pip install hailo_dataflow_compiler-3.32.0-py3-none-linux_x86_64.whl
+pip install hailo_dataflow_compiler-3.31.0-py3-none-linux_x86_64.whl
 ```
 
 ---------------
@@ -109,7 +110,21 @@ Install `opencv-python` in the `CV2` environment
 pip install opencv-python
 ```
 
-### 1.4) Convert Onnx to HAR
+### 1.3) Preparing Calibration dataset 
+
+Before you start, you will need to create a calibration set for the optimization process later on. 
+
+In the `CV2` environment, run the script
+
+```bash
+python convert_images.py --width YOUR_MODEL_INPUT_WIDTH --height YOUR_MODEL_INPUT_HEIGHT
+```
+
+When conversion is complete, `calib_set.npy` should be saved under `Hailo` folder.
+
+### 1.4) Onnx to HAR
+
+In the `Hailo` environment
 
 Run the following script
 
@@ -125,16 +140,11 @@ If your onnx is called EXAMPLE.onnx, then run
 python onnx2har.py EXAMPLE
 ```
 
-When conversion is complete, YOUR_MODEL_NAME.har should be under the Hailo folder.
+When conversion is complete, `YOUR_MODEL_NAME.har` should be saved under the Hailo folder.
 
-### 1.5) Calibration dataset 
+### 1.6) HAR to Optimized HAR 
 
-Before running the optimization step, you will need to create a calibration set for the optimization process.
-
-
-
-### 1.6) Optimized HAR 
-
+If your model is train with data normalize to range[0 - 1], run the script
 
 ```bash
 python optimize_har.py YOUR_MODEL_NAME
@@ -148,8 +158,13 @@ If your har is called EXAMPLE.har, then run
 python optimize_har.py EXAMPLE
 ```
 
+When optimization is complete, `YOUR_MODEL_NAME_optimized.har` should be saved under the Hailo folder.
+
+------------
+
+**Note : I haven't tried with model that isn't normalize to [0 -1], I am not sure if this correct or not.**
+
 If your model is train with data normalize to some other range that isn't [0 - 1] you will need to modify the `model_sciprt.alls` file before running the script. 
-**Note : I am have tried with model that isn't normalize to [0 -1], I am not sure if this correct or not.**
 
 Modify this line 
 
@@ -164,6 +179,10 @@ Per Color Channel
 where min = your min range * 255
 
 where max = your max range * 255
+
+### 1.7 ) Optimized HAR to HEF 
+
+
 
 
 
