@@ -8,6 +8,8 @@ This step by step is a recreation of what worked for me, I have no idea if it wi
 
 This guide is using `WSL2 Ubuntu 24.04` with `conda`
 
+It is recommended to simplified your onnx first before conversion, but it is not a strict requirement.
+
 ### 1.0) Download hailo DFC
 
 If you don't have a hailoai account please head over to https://hailo.ai/ and create your account first.
@@ -34,7 +36,7 @@ To get started, it is best to create a new virtual environment.
 conda create -n YOUR_ENV_NAME python=3.10
 ```
 
-Activate your environment
+Activate your environment.
 
 ```bash
 conda activate YOUR_ENV_NAME 
@@ -48,26 +50,55 @@ Your should see
 
 ### 1.2) Install Hailo DFC
 
-Navigate to directory where `hailo_dataflow_compiler-3.31.0-py3-none-linux_x86_64.whl` is placed
+Navigate to directory where `hailo_dataflow_compiler-3.31.0-py3-none-linux_x86_64.whl` is placed.
 
-Install Hailo DFC by running
+Install Hailo DFC.
 ```bash 
 pip install hailo_dataflow_compiler-3.31.0-py3-none-linux_x86_64.whl
 ```
 
 ### 1.3) Project Structure
 
-If you want to my code with minimium modification, please follow my starting folder structures. 
+git clone this repository. 
+
+```bash
+git clone https://github.com/alcino723/ONNX2HEF2AIHAT.git
+```
+
+The starting folder structures look like this : 
 
 - PROJECT
   - Onnx
-    - YOUR_MODEL_NAME
-      - YOUR_MODEL_NAME.onnx
+    - PLACE YOUR ONNX HERE
   - Hailo
     - model_script.alls
   - onnx2har.py
   - optimize_har.py
   - compile_har.py
+
+Place your onnx under the Onnx folder. 
+
+### 1.4) Convert Onnx to HAR
+
+Run the following script
+
+```bash
+python onnx2har.py YOUR_MODEL_NAME
+```
+
+Example :
+
+If your onnx is called EXAMPLE.onnx, then run
+
+```bash
+python onnx2har.py EXAMPLE
+```
+
+When conversion complete, YOUR_MODEL_NAME.har should be under the Hailo folder.
+
+### 1.5) Optimized HAR 
+
+
 
 
       
