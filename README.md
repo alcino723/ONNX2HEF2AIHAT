@@ -1,14 +1,15 @@
 # A step by step "guide" for deploying your custom model on the Raspberry pi AI HAT. 
 
 Please note I spend over 20+ hours trying to get the damn thing to work and as of writing this guide, I still barely know what will work or what will not work. 
-This step by step is a recreation of what worked for me, I have no idea if it will work for you. 
-
+This step by step is a recreation of what worked for me, hopefully this quick and dirty guide work for you.
 
 ## Part 1 : Converting Onnx to HEF
 
 This guide is using `WSL2 Ubuntu 24.04` with `conda`
 
 It is recommended to simplified your onnx first before conversion, but it is not a strict requirement.
+
+My guide is focus on model train with input data normalize to range[0 - 1]. If you model is train with other normalization range, then you will have to do some experimenting on your own. 
 
 ### 1.0) Download hailo DFC
 
@@ -94,14 +95,51 @@ If your onnx is called EXAMPLE.onnx, then run
 python onnx2har.py EXAMPLE
 ```
 
-When conversion complete, YOUR_MODEL_NAME.har should be under the Hailo folder.
+When conversion is complete, YOUR_MODEL_NAME.har should be under the Hailo folder.
 
-### 1.5) Optimized HAR 
+### 1.5) Calibration dataset 
+
+Before running the optimization step, you will need to create a calibration set for the optimization process.
+
+
+
+### 1.6) Optimized HAR 
+
+
+```bash
+python optimize_har.py YOUR_MODEL_NAME
+```
+
+Example :
+
+If your har is called EXAMPLE.har, then run
+
+```bash
+python optimize_har.py EXAMPLE
+```
+
+If your model is train with data normalize to some other range that isn't [0 - 1] you will need to modify the `model_sciprt.alls` file before running the script. 
+**Note : I am have tried with model that isn't normalize to [0 -1], I am not sure if this correct or not.**
+
+Modify this line 
+
+`normalize1 = normalization([0, 0, 0], [255, 255, 255])`
+
+to 
+
+`normalize1 = normalization([min, min, min], [max, max, max])` 
+
+Per Color Channel
+
+where min = your min range * 255
+
+where max = your max range * 255
 
 
 
 
-      
+
+
       
 
 
