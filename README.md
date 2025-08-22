@@ -202,7 +202,7 @@ When compilation is complete, `YOUR_MODEL_NAME.hef` should be saved under the Ha
 
 ### 2.0 ) Follow the official guide to get started with the AI HAT : https://www.raspberrypi.com/documentation/computers/ai.html
 
-### 2.1 ) Transfer you HEF file to the raspberry pi and check if your HEF file by running 
+### 2.1 ) Transfer you HEF file to the raspberry pi and check your HEF file by running 
 
 ```bash
 hailortcli run YOUR_MODEL_NAME.hef
